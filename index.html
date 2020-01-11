@@ -9,21 +9,27 @@
         display: flex;
         justify-content: center;
       }
-      #message-container {
-        width: 75%;
-        max-width: 1200px;
-      }
-      #message-container div {
+      .msg-of-others {
         background-color: #eeeeee;
+        padding: 5px;
+        margin: 2px;
+      }
+      .msg-of-me {
+        background-color: #cccccc;
         padding: 4px;
         margin: 1px;
+        text-align: right;
+      }
+      #message-container {
+        width: 75%;
+        max-width: 600px;
       }
       #send-container {
         position: fixed;
         padding-bottom: 40px;
         bottom: 0;
         background-color: #ffffff;
-        max-width: 1200px;
+        max-width: 600px;
         width: 75%;
         display: flex;
       }
@@ -47,7 +53,7 @@
     const messageInput = document.getElementById("message-input");
 
     const name = prompt("What is your name?");
-    appendMessage("You joined");
+    appendMessage("You joined the chat");
     socket.emit("new-user", name);
 
     socket.on("chat-message", data => {
@@ -65,13 +71,21 @@
     messageForm.addEventListener("submit", e => {
       e.preventDefault();
       const message = messageInput.value;
-      appendMessage(`You: ${message}`);
+      appendMessageOfMe(message);
       socket.emit("send-chat-message", message);
       messageInput.value = "";
     });
 
     function appendMessage(message) {
       const messageElement = document.createElement("div");
+      messageElement.className = "msg-of-others";
+      messageElement.innerText = message;
+      messageContainer.append(messageElement);
+    }
+
+    function appendMessageOfMe(message) {
+      const messageElement = document.createElement("div");
+      messageElement.className = "msg-of-me";
       messageElement.innerText = message;
       messageContainer.append(messageElement);
     }
