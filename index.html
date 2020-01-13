@@ -28,7 +28,7 @@
       }
       #send-container {
         position: fixed;
-        padding-bottom: 10px;
+        padding-bottom: 8px;
         bottom: 0;
         background-color: #ffffff;
         max-width: 600px;
@@ -54,7 +54,7 @@
     const messageForm = document.getElementById("send-container");
     const messageInput = document.getElementById("message-input");
 
-    const name = prompt("Made by Ekansh...\n What's your name?");
+    const name = prompt("Made by Ekansh...\nWhat's your name?");
     appendMessage("You joined the chat");
     socket.emit("new-user", name);
 
